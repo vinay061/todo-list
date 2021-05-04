@@ -14,7 +14,7 @@ function App() {
         "id": 2,
         "text": "Meeting on Development",
         "day": "June 6th at 1:30pm",
-        "reminder": true
+        "reminder": false
       },
       {
         "id": 3,
@@ -24,10 +24,24 @@ function App() {
       }
 ]);
 
+//delete Task
+
+const deleteTask = (id) => {
+  setTasks(tasks.filter( (task) => ( task.id !== id )));
+}
+
+// Toggle on double click
+const toggleReminder = (id) => {
+  //console.log('toggle',id);
+  setTasks(tasks.map( (task) => 
+  task.id === id ? {...task, reminder: !task.reminder} : task));
+}
   return (
     <div className="container">
       <Header title=" Task Tracker"/>
-      <Tasks tasks={tasks}/>
+      {tasks.length > 0 ? <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder}/>
+      :
+      'No Tasks to Display' }
     </div>
   );
 }
